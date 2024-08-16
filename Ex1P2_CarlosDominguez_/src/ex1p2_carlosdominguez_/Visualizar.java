@@ -1,6 +1,8 @@
 
 package ex1p2_carlosdominguez_;
 
+import static ex1p2_carlosdominguez_.MarcoTodo.infoV;
+
 public class Visualizar extends javax.swing.JPanel {
 
     /**
@@ -8,7 +10,7 @@ public class Visualizar extends javax.swing.JPanel {
      */
     public Visualizar() {
         initComponents();
-        
+        SalidaV.setText(infoV);
     }
 
     /**

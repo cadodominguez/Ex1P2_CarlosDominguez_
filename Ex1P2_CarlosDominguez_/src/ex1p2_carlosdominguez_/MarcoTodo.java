@@ -17,7 +17,7 @@ public class MarcoTodo extends javax.swing.JFrame {
     static String infoV = "";
     public MarcoTodo() {
         Usuarios.add(new Home("Onasis"));
-        this.setLocationRelativeTo(null);
+
         initComponents();
     }
 
@@ -176,20 +176,28 @@ public class MarcoTodo extends javax.swing.JFrame {
                 Home actual = Usuarios.get(index_global);
                 ArrayList <Creacion> temp = actual.getArchivoYDirectorios();
                 if (comando.contains(".file")) {
-                    temp.add(new File(piezas_comando[1]));
+                    if (existe_arc(piezas_comando[1],temp)) {
+                        Consola.append(">>El Archivo ya existe"+"\n");
+                    }else{
+                        temp.add(new File(piezas_comando[1]));
+                        actual.setArchivoYDirectorios(temp);
+                        Usuarios.set(index_global, actual);
+                        Consola.append(comando+"\n");
+                    }
                 }else{
-                    temp.add(new Directorio(piezas_comando[1]));
-                }
-                if (existe_arc(piezas_comando[1],temp)) {
-                    Consola.append(">>El Archivo ya existe"+"\n");
-                }else{
-                    actual.setArchivoYDirectorios(temp);
-                    Usuarios.set(index_global, actual);
-                    Consola.append(comando+"\n");
+                    if (existe_arc(piezas_comando[1],temp)) {
+                        Consola.append(">>El Archivo ya existe"+"\n");;
+                    }else{
+                        temp.add(new Directorio(piezas_comando[1]));
+                        actual.setArchivoYDirectorios(temp);
+                        Usuarios.set(index_global, actual);
+                        Consola.append(comando+"\n");
+                    }
                 }
             }else{
                 Consola.append(">>Comando ingresado Incorrectamente"+"\n");
             }
+            llenado_comboBox();
         }else if (comando.contains("rm")) {
             if (piezas_comando.length >= 2) {
                 Home actual = Usuarios.get(index_global);
@@ -225,6 +233,7 @@ public class MarcoTodo extends javax.swing.JFrame {
                 }else{
                     index_global = existe_UsuarioIndex(piezas_comando[2]);
                     llenar_label(index_global);
+                    llenado_comboBox();
                     Consola.append(comando+"\n");
                 }
             }else{
@@ -236,9 +245,11 @@ public class MarcoTodo extends javax.swing.JFrame {
     }//GEN-LAST:event_BEnterActionPerformed
 
     private void VisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizeActionPerformed
+
         infoV = infoV();
         Visualizar V = new Visualizar();
         V.setVisible(true);
+        
         
     }//GEN-LAST:event_VisualizeActionPerformed
     public static boolean existe_arc(String nuevo, ArrayList <Creacion> temp){
@@ -303,7 +314,11 @@ public class MarcoTodo extends javax.swing.JFrame {
         String salida = "";
         Home actual = Usuarios.get(index_global);
         int selecionado = Directorios.getSelectedIndex();
-        salida += actual.getArchivoYDirectorios().get(selecionado).visualisacion();
+        if (selecionado == 0) {
+            salida = "Uups a pasado algo";
+        }else{
+            salida += actual.getArchivoYDirectorios().get(selecionado).visualisacion();
+        }
         return salida;
     }
     /**
