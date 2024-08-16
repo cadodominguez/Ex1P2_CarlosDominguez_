@@ -14,9 +14,10 @@ import javax.swing.DefaultComboBoxModel;
 public class MarcoTodo extends javax.swing.JFrame {
     static int index_global = -1;
     static ArrayList <Home> Usuarios = new ArrayList();
+    static String infoV = "";
     public MarcoTodo() {
         Usuarios.add(new Home("Onasis"));
-        
+        this.setLocationRelativeTo(null);
         initComponents();
     }
 
@@ -67,6 +68,11 @@ public class MarcoTodo extends javax.swing.JFrame {
         Visualize.setForeground(new java.awt.Color(0, 0, 0));
         Visualize.setText("Visualisar");
         Visualize.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        Visualize.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VisualizeActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 255));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -144,7 +150,7 @@ public class MarcoTodo extends javax.swing.JFrame {
         String comando = Comando.getText();
         String [] piezas_comando = comando.split(" ");
         
-        if (comando.equalsIgnoreCase("Is")) {
+        if (comando.equalsIgnoreCase("Ls")) {
             if (Root.getText().equalsIgnoreCase(">Root")) {
                 Consola.append(">>Necesita logearse en una Usuario para usar este comando"+"\n");
             }else{
@@ -228,6 +234,13 @@ public class MarcoTodo extends javax.swing.JFrame {
             Consola.append(">>Siquiera que tratabas de escribir?"+"\n");
         }
     }//GEN-LAST:event_BEnterActionPerformed
+
+    private void VisualizeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VisualizeActionPerformed
+        infoV = infoV();
+        Visualizar V = new Visualizar();
+        V.setVisible(true);
+        
+    }//GEN-LAST:event_VisualizeActionPerformed
     public static boolean existe_arc(String nuevo, ArrayList <Creacion> temp){
         boolean salida = false;
         for (int i = 0; i < temp.size(); i++) {
@@ -238,10 +251,10 @@ public class MarcoTodo extends javax.swing.JFrame {
         }
         return salida;
     }
-    public static int index_rm(String nuevo, ArrayList <String> temp){
+    public static int index_rm(String nuevo, ArrayList <Creacion> temp){
         int index = -1;
         for (int i = 0; i < temp.size(); i++) {
-            if (nuevo.equalsIgnoreCase(temp.get(i))) {
+            if (nuevo.equalsIgnoreCase(temp.get(i).getNombre())) {
                 index = i;
                 break;
             }
@@ -254,7 +267,7 @@ public class MarcoTodo extends javax.swing.JFrame {
         DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
         ComboBox.addElement("Home");
         for (int j = 0; j < Usuarios.get(index_global).getArchivoYDirectorios().size(); j++) {
-            ComboBox.addElement(Usuarios.get(index_global).getArchivoYDirectorios().get(j));
+            ComboBox.addElement(Usuarios.get(index_global).getArchivoYDirectorios().get(j).getNombre());
         }
         Directorios.setModel(ComboBox);
     }
@@ -285,6 +298,13 @@ public class MarcoTodo extends javax.swing.JFrame {
     public void llenar_label(int index){
         Home actual = Usuarios.get(index);
         Root.setText(">"+actual.getNombre());
+    }
+    public String infoV(){
+        String salida = "";
+        Home actual = Usuarios.get(index_global);
+        int selecionado = Directorios.getSelectedIndex();
+        salida += actual.getArchivoYDirectorios().get(selecionado).visualisacion();
+        return salida;
     }
     /**
      * @param args the command line arguments
