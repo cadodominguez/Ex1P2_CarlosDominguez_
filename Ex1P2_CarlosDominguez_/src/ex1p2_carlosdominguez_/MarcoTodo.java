@@ -192,29 +192,36 @@ public class MarcoTodo extends javax.swing.JFrame {
                     actual.setArchivoYDirectorios(temp);
                     Usuarios.set(index_global, actual);
                     Consola.append(comando+"\n");
+                    llenado_comboBox();
                 }
             }else{
                 Consola.append(">>No se pudo encontrar el archivo o directorio "+"\n");
             }
         }else if (comando.contains("boroa create")) {
             if (piezas_comando.length >= 3) {
-                 
-                
-                
-                Consola.append(comando+"\n");
+                if (existe_U(piezas_comando[3])) {
+                    Consola.append(">>Ya existe este Usuario"+"\n");
+                }else{
+                    Usuarios.add(new Home(piezas_comando[3]));
+                    Consola.append(comando+"\n");
+                }
             }else{
                 Consola.append(">>Comando ingresado Incorrectamente"+"\n");
             }
         }else if (comando.contains("boroa chnge")) {
             if (piezas_comando.length >= 3) {
-                 
-                
-                
-                
-                Consola.append(comando+"\n");
+                if (existe_UsuarioIndex(piezas_comando[3]) == -1) {
+                    Consola.append(">>No existe ese usuario"+"\n");
+                }else{
+                    index_global = existe_UsuarioIndex(piezas_comando[3]);
+                    llenar_label(index_global);
+                    Consola.append(comando+"\n");
+                }
             }else{
                 Consola.append(">>Comando ingresado Incorrectamente"+"\n");
             }
+        }else{
+            Consola.append(">>Siquiera que tratabas de escribir?"+"\n");
         }
     }//GEN-LAST:event_BEnterActionPerformed
     public static boolean existe_arc(String nuevo, ArrayList <String> temp){
@@ -238,6 +245,43 @@ public class MarcoTodo extends javax.swing.JFrame {
         return index;
     }
     
+    public void llenado_comboBox(){
+        Directorios.removeAllItems();
+        DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
+        ComboBox.addElement("Home");
+        for (int j = 0; j < Usuarios.get(index_global).getArchivoYDirectorios().size(); j++) {
+            ComboBox.addElement(Usuarios.get(index_global).getArchivoYDirectorios().get(j));
+        }
+        Directorios.setModel(ComboBox);
+    }
+    public boolean existe_U(String nombre){
+        boolean salida = false;
+        for (int i = 0; i < Usuarios.size(); i++) {
+            Home actual = Usuarios.get(i);
+            if (actual.getNombre().equalsIgnoreCase(nombre)) {
+                salida = true;
+                break;
+            }
+        }
+        
+        return salida;
+    }
+    public int existe_UsuarioIndex(String nombre){
+        int salida = -1;
+        for (int i = 0; i < Usuarios.size(); i++) {
+            Home actual = Usuarios.get(i);
+            if (actual.getNombre().equalsIgnoreCase(nombre)) {
+                salida = i;
+                break;
+            }
+        }
+        
+        return salida;
+    }
+    public void llenar_label(int index){
+        Home actual = Usuarios.get(index);
+        Root.setText(">"+actual.getNombre());
+    }
     /**
      * @param args the command line arguments
      */
