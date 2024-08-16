@@ -14,9 +14,9 @@ import javax.swing.DefaultComboBoxModel;
 public class MarcoTodo extends javax.swing.JFrame {
     static int index_global = -1;
     static ArrayList <Home> Usuarios = new ArrayList();
-    
     public MarcoTodo() {
         Usuarios.add(new Home("Onasis"));
+        
         initComponents();
     }
 
@@ -143,10 +143,12 @@ public class MarcoTodo extends javax.swing.JFrame {
         
         String comando = Comando.getText();
         String [] piezas_comando = comando.split(" ");
+        
         if (comando.equalsIgnoreCase("Is")) {
             if (Root.getText().equalsIgnoreCase(">Root")) {
                 Consola.append(">>Necesita logearse en una Usuario para usar este comando"+"\n");
             }else{
+                Consola.append("Is"+"\n");
                 DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
                 String nombre = Root.getText().replace(">", "");
                 for (int i = 0; i < Usuarios.size(); i++) {
@@ -164,24 +166,76 @@ public class MarcoTodo extends javax.swing.JFrame {
             Consola.setText("");
             Consola.append("clear"+"\n");
         }else if (comando.contains("mkdir")) {
-            if (comando.equalsIgnoreCase(".file")) {
-                String prueba = piezas_comando[0]+","+ piezas_comando[1];
-                System.out.println(prueba + ","+piezas_comando.length );
-                
+            if (piezas_comando.length >= 2) {
+                Home actual = Usuarios.get(index_global);
+                ArrayList <String> temp = actual.getArchivoYDirectorios();
+                temp.add(piezas_comando[1]);
+                if (existe_arc(piezas_comando[1],temp)) {
+                    Consola.append(">>El Archivo ya existe"+"\n");
+                }else{
+                    actual.setArchivoYDirectorios(temp);
+                    Usuarios.set(index_global, actual);
+                    Consola.append(comando+"\n");
+                }
             }else{
-                
+                Consola.append(">>Comando ingresado Incorrectamente"+"\n");
             }
         }else if (comando.contains("rm")) {
-            
+            if (piezas_comando.length >= 2) {
+                Home actual = Usuarios.get(index_global);
+                ArrayList <String> temp = actual.getArchivoYDirectorios();
+                int index = index_rm(piezas_comando[1],temp);
+                if (index == -1) {
+                    Consola.append(">>El Archivo ya existe"+"\n");
+                }else{
+                    temp.remove(index);
+                    actual.setArchivoYDirectorios(temp);
+                    Usuarios.set(index_global, actual);
+                    Consola.append(comando+"\n");
+                }
+            }else{
+                Consola.append(">>No se pudo encontrar el archivo o directorio "+"\n");
+            }
         }else if (comando.contains("boroa create")) {
-            
+            if (piezas_comando.length >= 3) {
+                 
+                
+                
+                Consola.append(comando+"\n");
+            }else{
+                Consola.append(">>Comando ingresado Incorrectamente"+"\n");
+            }
         }else if (comando.contains("boroa chnge")) {
-            
+            if (piezas_comando.length >= 3) {
+                 
+                
+                
+                
+                Consola.append(comando+"\n");
+            }else{
+                Consola.append(">>Comando ingresado Incorrectamente"+"\n");
+            }
         }
     }//GEN-LAST:event_BEnterActionPerformed
-    public static boolean existe(){
+    public static boolean existe_arc(String nuevo, ArrayList <String> temp){
         boolean salida = false;
+        for (int i = 0; i < temp.size(); i++) {
+            if (nuevo.equalsIgnoreCase(temp.get(i))) {
+                salida = true;
+                break;
+            }
+        }
         return salida;
+    }
+    public static int index_rm(String nuevo, ArrayList <String> temp){
+        int index = -1;
+        for (int i = 0; i < temp.size(); i++) {
+            if (nuevo.equalsIgnoreCase(temp.get(i))) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
     
     /**
