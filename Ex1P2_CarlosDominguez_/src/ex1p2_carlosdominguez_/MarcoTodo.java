@@ -12,10 +12,11 @@ import javax.swing.DefaultComboBoxModel;
  * @author USUARIO
  */
 public class MarcoTodo extends javax.swing.JFrame {
-
+    static int index_global = -1;
     static ArrayList <Home> Usuarios = new ArrayList();
     
     public MarcoTodo() {
+        Usuarios.add(new Home("Onasis"));
         initComponents();
     }
 
@@ -141,28 +142,48 @@ public class MarcoTodo extends javax.swing.JFrame {
     private void BEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BEnterActionPerformed
         
         String comando = Comando.getText();
-        
+        String [] piezas_comando = comando.split(" ");
         if (comando.equalsIgnoreCase("Is")) {
-            DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
-            String nombre = Root.getText().replace(">", "");
-            for (int i = 0; i < Usuarios.size(); i++) {
-                
+            if (Root.getText().equalsIgnoreCase(">Root")) {
+                Consola.append(">>Necesita logearse en una Usuario para usar este comando"+"\n");
+            }else{
+                DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
+                String nombre = Root.getText().replace(">", "");
+                for (int i = 0; i < Usuarios.size(); i++) {
+                    if (Usuarios.get(i).getNombre().equalsIgnoreCase(nombre)) {
+                    index_global = i;
+                    for (int j = 0; j < Usuarios.get(i).getArchivoYDirectorios().size(); j++) {
+                        ComboBox.addElement(Usuarios.get(i).getArchivoYDirectorios().get(j));
+                        Consola.append(">>"+Usuarios.get(i).getArchivoYDirectorios().get(j)+"\n");
+                    }
+                }
             }
             Directorios.setModel(ComboBox);
+            }
         }else if (comando.equalsIgnoreCase("clear")) {
             Consola.setText("");
             Consola.append("clear"+"\n");
-        }else if (comando.equalsIgnoreCase("mkdir")) {
+        }else if (comando.contains("mkdir")) {
+            if (comando.equalsIgnoreCase(".file")) {
+                String prueba = piezas_comando[0]+","+ piezas_comando[1];
+                System.out.println(prueba + ","+piezas_comando.length );
+                
+            }else{
+                
+            }
+        }else if (comando.contains("rm")) {
             
-        }else if (comando.equalsIgnoreCase("rm")) {
+        }else if (comando.contains("boroa create")) {
             
-        }else if (comando.equalsIgnoreCase("boroa create")) {
-            
-        }else if (comando.equalsIgnoreCase("boroa chnge")) {
+        }else if (comando.contains("boroa chnge")) {
             
         }
     }//GEN-LAST:event_BEnterActionPerformed
-
+    public static boolean existe(){
+        boolean salida = false;
+        return salida;
+    }
+    
     /**
      * @param args the command line arguments
      */

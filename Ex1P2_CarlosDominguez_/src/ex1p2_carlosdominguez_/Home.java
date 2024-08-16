@@ -7,8 +7,8 @@ public class Home {
     
     private String Nombre;
     
-    private ArrayList <String> archivos = new ArrayList();
-    private ArrayList <String> directorios = new ArrayList();
+    private ArrayList <String> ArchivoYDirectorios = new ArrayList();
+
 
     public Home(String Nombre) {
         this.Nombre = Nombre;
@@ -22,21 +22,17 @@ public class Home {
         this.Nombre = Nombre;
     }
 
-    public ArrayList <String> getArchivos() {
-        return archivos;
+    public ArrayList <String> getArchivoYDirectorios() {
+        return ArchivoYDirectorios;
     }
 
-    public void setArchivos(ArrayList <String> archivos) {
-        this.archivos = archivos;
+    public void setArchivoYDirectorios(ArrayList <String> ArchivoYDirectorios) {
+        this.ArchivoYDirectorios = ArchivoYDirectorios;
     }
 
-    public ArrayList <String> getDirectorios() {
-        return directorios;
-    }
+    
 
-    public void setDirectorios(ArrayList <String> directorios) {
-        this.directorios = directorios;
-    }
+   
     
     
 }
