@@ -1,7 +1,7 @@
 
 package ex1p2_carlosdominguez_;
 
-public class Creacion {
+public abstract class Creacion {
     private String nombre;
 
     public Creacion(String nombre) {
@@ -14,6 +14,12 @@ public class Creacion {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+    public abstract String visualisacion();
+
+    @Override
+    public String toString() {
+        return nombre;
     }
     
 }

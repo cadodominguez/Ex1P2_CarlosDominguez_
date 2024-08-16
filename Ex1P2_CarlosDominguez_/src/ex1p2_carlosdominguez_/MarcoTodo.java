@@ -156,7 +156,7 @@ public class MarcoTodo extends javax.swing.JFrame {
                     index_global = i;
                     for (int j = 0; j < Usuarios.get(i).getArchivoYDirectorios().size(); j++) {
                         ComboBox.addElement(Usuarios.get(i).getArchivoYDirectorios().get(j));
-                        Consola.append(">>"+Usuarios.get(i).getArchivoYDirectorios().get(j)+"\n");
+                        Consola.append(">>"+Usuarios.get(i).getArchivoYDirectorios().get(j).toString()+"\n");
                     }
                 }
             }
@@ -168,8 +168,12 @@ public class MarcoTodo extends javax.swing.JFrame {
         }else if (comando.contains("mkdir")) {
             if (piezas_comando.length >= 2) {
                 Home actual = Usuarios.get(index_global);
-                ArrayList <String> temp = actual.getArchivoYDirectorios();
-                temp.add(piezas_comando[1]);
+                ArrayList <Creacion> temp = actual.getArchivoYDirectorios();
+                if (comando.contains(".file")) {
+                    temp.add(new File(piezas_comando[1]));
+                }else{
+                    temp.add(new Directorio(piezas_comando[1]));
+                }
                 if (existe_arc(piezas_comando[1],temp)) {
                     Consola.append(">>El Archivo ya existe"+"\n");
                 }else{
@@ -183,7 +187,7 @@ public class MarcoTodo extends javax.swing.JFrame {
         }else if (comando.contains("rm")) {
             if (piezas_comando.length >= 2) {
                 Home actual = Usuarios.get(index_global);
-                ArrayList <String> temp = actual.getArchivoYDirectorios();
+                ArrayList <Creacion> temp = actual.getArchivoYDirectorios();
                 int index = index_rm(piezas_comando[1],temp);
                 if (index == -1) {
                     Consola.append(">>El Archivo ya existe"+"\n");
@@ -224,10 +228,10 @@ public class MarcoTodo extends javax.swing.JFrame {
             Consola.append(">>Siquiera que tratabas de escribir?"+"\n");
         }
     }//GEN-LAST:event_BEnterActionPerformed
-    public static boolean existe_arc(String nuevo, ArrayList <String> temp){
+    public static boolean existe_arc(String nuevo, ArrayList <Creacion> temp){
         boolean salida = false;
         for (int i = 0; i < temp.size(); i++) {
-            if (nuevo.equalsIgnoreCase(temp.get(i))) {
+            if (nuevo.equalsIgnoreCase(temp.get(i).getNombre())) {
                 salida = true;
                 break;
             }

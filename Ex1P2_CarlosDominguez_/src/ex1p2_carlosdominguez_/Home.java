@@ -7,7 +7,7 @@ public class Home {
     
     private String Nombre;
     
-    private ArrayList <String> ArchivoYDirectorios = new ArrayList();
+    private ArrayList <Creacion> ArchivoYDirectorios = new ArrayList();
 
 
     public Home(String Nombre) {
@@ -22,13 +22,15 @@ public class Home {
         this.Nombre = Nombre;
     }
 
-    public ArrayList <String> getArchivoYDirectorios() {
+    public ArrayList <Creacion> getArchivoYDirectorios() {
         return ArchivoYDirectorios;
     }
 
-    public void setArchivoYDirectorios(ArrayList <String> ArchivoYDirectorios) {
+    public void setArchivoYDirectorios(ArrayList <Creacion> ArchivoYDirectorios) {
         this.ArchivoYDirectorios = ArchivoYDirectorios;
     }
+
+    
 
     
 
