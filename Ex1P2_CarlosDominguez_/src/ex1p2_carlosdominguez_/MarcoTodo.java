@@ -199,10 +199,10 @@ public class MarcoTodo extends javax.swing.JFrame {
             }
         }else if (comando.contains("boroa create")) {
             if (piezas_comando.length >= 3) {
-                if (existe_U(piezas_comando[3])) {
+                if (existe_U(piezas_comando[2])) {
                     Consola.append(">>Ya existe este Usuario"+"\n");
                 }else{
-                    Usuarios.add(new Home(piezas_comando[3]));
+                    Usuarios.add(new Home(piezas_comando[2]));
                     Consola.append(comando+"\n");
                 }
             }else{
@@ -210,10 +210,10 @@ public class MarcoTodo extends javax.swing.JFrame {
             }
         }else if (comando.contains("boroa chnge")) {
             if (piezas_comando.length >= 3) {
-                if (existe_UsuarioIndex(piezas_comando[3]) == -1) {
+                if (existe_UsuarioIndex(piezas_comando[2]) == -1) {
                     Consola.append(">>No existe ese usuario"+"\n");
                 }else{
-                    index_global = existe_UsuarioIndex(piezas_comando[3]);
+                    index_global = existe_UsuarioIndex(piezas_comando[2]);
                     llenar_label(index_global);
                     Consola.append(comando+"\n");
                 }
