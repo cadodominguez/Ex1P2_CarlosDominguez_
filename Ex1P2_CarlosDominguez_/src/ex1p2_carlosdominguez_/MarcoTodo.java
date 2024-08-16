@@ -4,15 +4,17 @@
  */
 package ex1p2_carlosdominguez_;
 
+import java.util.ArrayList;
+import javax.swing.DefaultComboBoxModel;
+
 /**
  *
  * @author USUARIO
  */
 public class MarcoTodo extends javax.swing.JFrame {
 
-    /**
-     * Creates new form MarcoTodo
-     */
+    static ArrayList <Home> Usuarios = new ArrayList();
+    
     public MarcoTodo() {
         initComponents();
     }
@@ -51,15 +53,19 @@ public class MarcoTodo extends javax.swing.JFrame {
         BEnter.setBackground(new java.awt.Color(0, 204, 255));
         BEnter.setForeground(new java.awt.Color(0, 0, 0));
         BEnter.setText("Enter");
+        BEnter.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
         BEnter.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BEnterActionPerformed(evt);
             }
         });
 
+        Directorios.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Home", " " }));
+
         Visualize.setBackground(new java.awt.Color(255, 153, 153));
         Visualize.setForeground(new java.awt.Color(0, 0, 0));
         Visualize.setText("Visualisar");
+        Visualize.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jPanel2.setBackground(new java.awt.Color(0, 204, 255));
         jPanel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -97,9 +103,7 @@ public class MarcoTodo extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BEnter, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(Visualize)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(Visualize, javax.swing.GroupLayout.DEFAULT_SIZE, 79, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,8 +139,28 @@ public class MarcoTodo extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BEnterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BEnterActionPerformed
+        
         String comando = Comando.getText();
         
+        if (comando.equalsIgnoreCase("Is")) {
+            DefaultComboBoxModel ComboBox = (DefaultComboBoxModel) Directorios.getModel();
+            String nombre = Root.getText().replace(">", "");
+            for (int i = 0; i < Usuarios.size(); i++) {
+                
+            }
+            Directorios.setModel(ComboBox);
+        }else if (comando.equalsIgnoreCase("clear")) {
+            Consola.setText("");
+            Consola.append("clear"+"\n");
+        }else if (comando.equalsIgnoreCase("mkdir")) {
+            
+        }else if (comando.equalsIgnoreCase("rm")) {
+            
+        }else if (comando.equalsIgnoreCase("boroa create")) {
+            
+        }else if (comando.equalsIgnoreCase("boroa chnge")) {
+            
+        }
     }//GEN-LAST:event_BEnterActionPerformed
 
     /**
